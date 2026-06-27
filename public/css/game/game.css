@@ -1,0 +1,705 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: white;
+    background-color: black;
+    overflow: hidden;
+}
+
+section {
+    width: 100%;
+    height: 100%;
+}
+
+canvas {
+    /*image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    image-rendering: -moz-crisp-edges;*/
+    /*filter: hue-rotate(50deg);*/
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+img#gameBackground {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+img#overlayImage {
+    position: fixed;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    /*width: 100%;*/
+    height: 100%;
+    display: none;
+}
+
+video#gameVideo,
+video#gameVideoBackground {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: none;
+}
+
+div#screenElements {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+div#screenElements .stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+div#transitionElement {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: none;
+    z-index: 999;
+}
+
+/* Chat */
+
+button#chat-button {
+    z-index: 1;
+    display: none;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    cursor: pointer;
+    /*border: solid rgb(150, 0, 50, 0.5) 2px;*/
+    border: solid rgba(255,255,255,0.2) 1px;
+    border-radius: 5px;
+    width: 40px; 
+    height: 40px;
+    background: rgb(100,75,175, 0.2) url(/imgs/chat/chat.png) no-repeat center 0px / 100%;
+    transition: all 0.5s;
+}
+
+div#unreadMessageCounter {
+    z-index: 1;
+    position: absolute;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    left: 30px;
+    top: 4px;
+    min-width: 18px; 
+    height: 18px;
+    color: white;
+    background-color: rgb(40, 40, 40);
+    border-radius: 100%;
+    border: solid black 1px;
+    font-size: 15px;
+}
+
+div#chat {
+    z-index: 2;
+    cursor: auto;
+    position: absolute;
+    vertical-align: baseline;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: solid rgb(50, 50, 50) 2px;
+    border-radius: 8px;
+    top: 50px;
+    left: 5px; 
+    width: 400px;
+    min-height: 50vh;
+    transition: all 0.5s;
+    animation: openChat 0.2s ease forwards;
+}
+
+div#chat-content {
+    display: inline-block;
+    position: relative;
+    overflow: auto;
+    text-align: left;
+    width: 98%;
+    height: 50vh;
+}
+
+div#chat-content p.Header {
+    position: relative;
+    cursor: pointer;
+    vertical-align: baseline;
+    margin: 0; 
+    margin-top: 20px;
+    margin-bottom: 4px;
+    margin-left: 40px;
+}
+
+div#chat-content p.Header span#Name:hover {
+    text-decoration: underline;
+}
+
+div#chat-content p.Header span#Timestamp {
+    cursor: text;
+    font-size: 10px;
+    color: rgb(180, 180, 180);
+}
+
+div#chat-content p.Header span#Level {
+    font-weight: bold;
+    color: #debd00;
+    font-size: 15px;
+    cursor: text;
+}
+
+div#chat-content img#Avatar {
+    position: absolute;
+    left: -40px;
+    top: -20px;
+    width: 35px;
+    height: 35px;
+    float: left;
+    margin-top: 20px;
+    border-radius: 100%;
+}
+
+div#chat-content p.ContentContaner {
+    position: relative;
+    vertical-align: baseline;
+    margin: 0;
+    margin-left: 40px;
+    line-height: 20px;
+    /*overflow: hidden;*/
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    transition: all 0.1s linear;
+}
+
+div#chat-content p.ContentContaner:hover {
+    background-color: rgb(50, 50, 50);
+}
+
+div#chat-content p.ContentContaner span#messageProps {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+    right: 5px;
+    top: -15px;
+    background-color: rgb(40, 40, 40);
+    border-radius: 5px;
+    overflow: hidden;
+    height: 25px;
+    box-shadow: 0px 0px 4px black;
+}
+
+div#chat-content p.ContentContaner span#messageProps button {
+    height: 100%;
+    width: 25px;
+    border: none;
+    background-color: transparent;
+    transition: all 0.2s linear;
+    color: red;
+    padding: 4px;
+}
+
+div#chat-content p.ContentContaner span#messageProps button:hover {
+    background-color: rgb(50, 50, 50);
+}
+
+
+.Mentioned {
+    background-color: rgba(200, 50, 100, 0.5);
+    border-left: solid rgba(150, 0, 50, 1) 2px;
+    padding: 1px;
+}
+
+div#message-box {
+    display: inline-flex;
+    align-items: center;
+    overflow: hidden;
+    font-size: 15px;
+    /*padding: 5px 7px;*/
+    background-color: rgb(30, 30, 30);
+    color: white;
+    min-height: 20px;
+    max-height: 84px;
+    width: 98%;
+    margin: 3px 50%;
+    transform: translateX(-50%);
+    border-radius: 8px;
+    transition: all 0.5s;
+}
+
+div#message-box-content {
+    display: block;
+    word-break: break-all;
+    align-items: center;
+    text-align: left;
+    width: 89%;
+    min-height: 17px;
+    max-height: 84px;
+    padding-right: 1px;
+    margin: 7px 9px;
+    margin-right: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /*position: relative;
+    width: max-content;
+    top: 50%;
+    transform: translateY(-50%);*/
+}
+
+span#placeholder {
+    position: absolute;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+    color: rgba(255, 255, 255, 0.2);
+    cursor: text;
+    margin-left: 9px;
+}
+/*
+div#message-box .messageBoxText {
+    display: inline-block;
+    word-wrap: break-word;
+    white-space: break-spaces!important;
+    word-break: break-all;
+    vertical-align: baseline;
+    min-height: 13px;
+    min-width: 15px;
+    background-color: rgba(0, 0, 0, 0.13);
+}*/
+
+.metion {
+    font-size: 14px;
+    display: inline-block;
+    cursor: pointer;
+    /*background-color: rgb(0, 128, 135);
+    color: rgb(228, 254, 255);
+    rgb(113, 108, 0)*/
+    background-color: rgb(0, 128, 135)!important;
+    color: white;
+    padding: 1px 2px;
+    border-radius: 4px;
+    margin: 0 2px;
+}
+
+.metion:hover {
+    background-color: rgb(0, 155, 163)!important;
+}
+
+.bold {
+    font-weight: bold;
+    font-weight: unset;
+}
+.italic {
+    font-style: italic;
+}
+.line {
+    text-decoration: line-through;
+}
+.underline {
+    text-decoration: underline;
+}
+.code {
+    padding: 1px;
+    border-radius: 2px;
+    background-color: #232428;
+}
+.giant {
+    font-weight: bold;
+    font-size: 22px;
+}
+.spoiler {
+    padding: 1px 3px;
+    border-radius: 4px;
+    background-color: #51535d;
+}
+.is-hidden {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+    color: transparent;
+    background-color: #17181b;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.is-hidden:hover {
+    background-color: #1c1d21;
+}
+#message-box-content .spoiler {
+    background-color: #51535d;
+}
+#message-box-content .is-hidden {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #ffffff;
+}
+
+button#send-button {
+    position: absolute;
+    cursor: pointer;
+    background: rgb(34, 170, 0) url(/imgs/chat/send-button.png) no-repeat center;
+    background-size: 100%;
+    border: none;
+    width: 15%;
+    height: 30px;
+    bottom: 0;
+    right: 0;
+    transition: all 0.5s;
+}
+span#characterLimitWarning {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 4px;
+    padding-left: 4px;
+    padding-right: 2px;
+    font-size: 115%;
+    color: red;
+    background-color: rgb(50, 50, 50);
+    font-weight: bold;
+}
+
+/* Caixa de emoji */
+
+
+span#openEmojiBoxButton {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    font-size: 115%;
+    width: 40px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0;
+    margin: 0px;
+    filter: grayscale(100%);
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+}
+
+span#openEmojiBoxButton:hover {
+    /*font-size: 130%;*/
+    scale: 1.17;
+    filter: grayscale(0);
+}
+
+div#emojiBox {
+    display: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    left: 100%;
+    bottom: 0;
+    width: 220px;
+    max-height: 50vh;
+    height: min-content;
+    border-radius: 8px;
+    padding: 3px;
+    background-color: rgb(30, 30, 30);
+    border: solid rgb(50, 50, 50) 2px;
+    animation: openEmojiBox linear 0.1s;
+}
+
+div#emojiBox .emoji {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    font-size: 170%;
+    margin: 1px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    cursor: pointer;
+    color: white;
+}
+
+div#emojiBox .emoji:hover {
+    background-color: rgb(60, 60, 60);
+}
+
+/* ---------- */
+
+span#connectingMessage {
+    position: absolute;
+    color: white;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    font-size: 18px;
+    /*font-size: 18px;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%) translateY(-28px);
+    width: 100%;*/
+}
+
+button#skipConnecting {
+    z-index: 2;
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 53%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 25px;
+    border-radius: 5px;
+    border: solid black 2px;
+    color: white;
+    transition: all 0.5s;
+    background-color: #eb3d3d;
+    padding: 1px 4px;
+    text-decoration: line-through;
+}
+
+button#skipConnecting:hover {
+    background-color: #c93030;
+}
+
+div#registerContent,
+div#loginContent {
+    display: none;
+    z-index: 1;
+} 
+
+div.loginAndRegisterContent {
+    cursor: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    /*overflow: auto;*/
+    width: 325px;
+    height: max-content;
+    max-height: 500px;
+    padding: 5px;
+    border-radius: 8px;
+    background-color: #acacac;
+}
+
+div.loginAndRegisterContent #title {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+}
+
+div.loginAndRegisterContent .description {
+    margin: 0;
+    margin-top: 10px;
+}
+
+div.loginAndRegisterContent .description.margin-top {
+    margin-top: 30px!important
+}
+
+div.loginAndRegisterContent .inputText {
+    width: 80%;
+    padding: 3px;
+    border-radius: 5px;
+    border: solid black 2px;
+    background-color: #888;
+    color: black;
+    box-shadow: 0px 0px 5px black;
+    font-size: 15px;
+}
+
+div.loginAndRegisterContent .inputText::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.showPasswordContent {
+    margin: 0!important;
+    padding: 0;
+}
+
+.showPassword {
+    font-size: 13px;
+    margin: 0;
+}
+
+.changeLoginState {
+    font-size: 15px;
+    cursor: pointer;
+    margin: 10px;
+    color: blue
+}
+.changeLoginState:hover {
+    text-decoration: underline;
+}
+
+div.loginAndRegisterContent #loginButton, 
+div.loginAndRegisterContent #registerButton,
+div.loginAndRegisterContent #withoutAccountButton {
+    display: block;
+    margin: 0 auto;
+    margin-top: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: solid black 2px;
+    box-shadow: 0px 0px 5px black;
+    color: white;
+    background-color: #5865f2;
+    transition: all 0.5s;
+}
+
+div.loginAndRegisterContent #loginButton:hover, 
+div.loginAndRegisterContent #registerButton:hover {
+    background-color: #4651c6;
+}
+
+div.loginAndRegisterContent #withoutAccountButton {
+    background-color: #eb3d3d;
+    padding: 1px 4px;
+    text-decoration: line-through;
+}
+
+div.loginAndRegisterContent #withoutAccountButton:hover {
+    background-color: #c93030;
+}
+
+div.loginAndRegisterContent div#connections {
+    display: block;
+    width: 90%;
+    padding: 0 10px;
+}
+
+div.loginAndRegisterContent div#connections .connectionButton {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+}
+
+img.buttonImage {
+    position: relative;
+    width: 100%;
+}
+
+img#connectionButtonDiscordImg {
+    border-radius: 5px;
+}
+
+span.contentSeparation {
+    display: block;
+    background-color: black;
+    border-radius: 40%;
+    margin: 0;
+    width: 100%;
+    height: 2px;
+    margin: 10px 0;
+}
+
+
+/* ZOOM Image */
+
+div.zoom {
+    z-index: 100;
+    position: fixed;
+    display: none;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+div.zoom.open {
+    display: flex;
+    opacity: 0;
+    animation: openZoom 0.2s forwards ease;
+}
+
+div.zoom div#zoomContent {
+    transform: scale(50%);
+    opacity: 0;
+    animation: openZoom 0.2s forwards ease;
+}
+
+div.zoom div#zoomContent img {
+    display: block;
+    max-height: 80vh;
+    max-width: 90vw;
+    text-align: left;
+}
+
+div.zoom a#openOriginal {
+    float: left;
+    width: fit-content;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 30px;
+    transition: opacity .15s ease;
+    opacity: .5;
+}
+
+div.zoom a#openOriginal:hover {
+    opacity: 1;
+    text-decoration: underline;
+}

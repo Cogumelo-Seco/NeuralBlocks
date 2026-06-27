@@ -1,0 +1,21 @@
+@keyframes openChat {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    } 
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes openEmojiBox {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    } 
+    to {
+        transform: scale(100%);
+        opacity: 1;
+    }
+}

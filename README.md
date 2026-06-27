@@ -1,1 +1,1 @@
-# NeuralBlocks
+#### Antes de copiar qualquer coisa deste repositório leia a [licença deste repositório](https://github.com/Cogumelo-Seco/Cogu-FNF/blob/main/LICENSE).
