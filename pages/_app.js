@@ -13,12 +13,13 @@ function App({ Component, pageProps }) {
     return (
         <>
             <Head>
-                <link rel="shortcut icon" href="https://alpha-site.vercel.app/imgs/avatar/Default.png" />
+                <link rel="shortcut icon" href="https://alpha-site.vercel.app/imgs/Cogu-avatar/Default.png" />
                 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#000000" />
             </Head>
             <head>
                 <link rel="stylesheet" href="/css/reset.css" />
                 <link rel="stylesheet" type="text/css" href="/css/nprogress.css" />
+                <link rel="stylesheet" href="/css/fonts.css" />
                 <link rel="stylesheet" href="/css/global.css" />
                 <link rel="stylesheet" href="/css/globalAnimations.css" />
             </head>
@@ -29,14 +30,6 @@ function App({ Component, pageProps }) {
                     }
                 `}</style>
             </nav>
-
-            <div id="zoom" className="zoom">
-                <div id="zoomContent">
-                    <img id="zoomImage" src="/imgs/logo.png" />
-                    <a id="openOriginal" href="/imgs/logo.png" target="_blank">Open original</a>
-                </div>
-            </div>
-
             <CookiesProvider>
                 <Component {...pageProps} />
             </CookiesProvider>
